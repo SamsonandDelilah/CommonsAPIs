@@ -1,0 +1,40 @@
+# Python Bytecode und Cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Virtuelle Umgebung
+venv/
+
+# SQLite temporäre oder Shell-Dateien
+.exit
+SELECT
+.tables
+*.sql
+*.sqlite
+*.sqlite3
+*.db
+*.db-journal
+*.db-wal
+
+# Editor- und IDE-Dateien
+.vscode/
+.idea/
+
+# Backup- und temporäre Dateien
+*_backup.py
+*_backup.yaml
+reset_base_SI_units.py
+replace_tabs.py
+*.bak
+*.tmp
+test_*.*
+
+# Sonstige
+.DS_Store
+.env
+.schema
+archive/
+
+# Version control DO NOT ADD!
+# .version_control.yaml
