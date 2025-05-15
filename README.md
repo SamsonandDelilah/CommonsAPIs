@@ -1,34 +1,3 @@
-```
-bmi_calculator_project/
-
-│
-├── app/                         # Main Flask application
-│   ├── static/                  # Static files (CSS, JS, Images)
-│   ├── templates/               # HTML templates for Flask
-│   │   └── base.html            # Base layout for the app
-│   │   └── index.html           # Main page for BMI Calculator
-│   ├── routes.py                # Flask route handlers
-│   ├── __init__.py              # Flask app initialization
-│
-├── services/                    # Service logic (translations, database, utilities)
-│   ├── bmi_calculator.py        # BMI calculation logic
-│   ├── translations.py          # Translation API integration
-│   ├── database.py              # Database connection and queries
-│
-├── config/                      # Configuration files
-│   ├── settings.py              # App-wide settings (DB, translation API)
-│
-├── migrations/                  # Database migrations
-│
-├── tests/                       # Unit tests for the application
-│
-├── Dockerfile                   # Dockerfile for deploying the app
-├── docker-compose.yml           # Docker Compose file (for app and LibreTranslate)
-├── requirements.txt             # Python dependencies
-├── run.py                       # Main entry point for running the app
-└── README.md                    # Documentation
-```
-
 # Commons APIs
 
 Welcome to **Commons APIs** - your open, free, and collaborative platform for accessible APIs!
