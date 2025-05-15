@@ -1,0 +1,10 @@
+# uid_registry.yaml
+entries:
+  phys:kinematics:free_fall_motion:
+    file: "physics/mechanics/classical/kinematics/formulas/free_fall_motion.yaml"
+    version: "1.0.0"
+    last_modified: "2023-11-20T14:30:00Z"
+    dependencies:
+      - "phys:constants:g"
+      - "phys:units:time"
+
