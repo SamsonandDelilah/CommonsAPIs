@@ -1,10 +1,33 @@
-# uid_registry.yaml
 entries:
-  phys:kinematics:free_fall_motion:
-    file: "physics/mechanics/classical/kinematics/formulas/free_fall_motion.yaml"
-    version: "1.0.0"
-    last_modified: "2023-11-20T14:30:00Z"
-    dependencies:
-      - "phys:constants:g"
-      - "phys:units:time"
-
+  dummy.yaml:dummy@0.0.0:
+    checksum: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    dependencies: []
+    file: dummy.yaml
+  knowledge_base:dummy@0.0.0:
+    checksum: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    dependencies: []
+    file: knowledge_base\dummy.yaml
+  materials:dummy@0.0.0:
+    checksum: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    dependencies: []
+    file: materials\dummy.yaml
+  mathematics:dummy@0.0.0:
+    checksum: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    dependencies: []
+    file: mathematics\dummy.yaml
+  meta:uid_registry@0.0.0:
+    checksum: 1234693a8d93dcc727e02e72d2a3ee5d5c4e40a5a379614d73ae6ad0fa3d710e
+    dependencies: []
+    file: meta\version_control\uid_registry.yaml
+  meta:version_tracker@0.0.0:
+    checksum: 92e839ad056c9f6e12a4814ae7e1023979247cf7e4902593a6e9cade26ee174b
+    dependencies: []
+    file: meta\version_control\version_tracker.yaml
+  physics:dummy@0.0.0:
+    checksum: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    dependencies: []
+    file: physics\mechanics\classical\kinematics\formulas\dummy.yaml
+  physics:free_fall_motion@1.0.0:
+    checksum: 0e3a89d02db9961ac9fcffb36e644885d801975d40cd05b9fad87c7c6f67d45d
+    dependencies: []
+    file: physics\mechanics\classical\kinematics\formulas\free_fall_motion.yaml

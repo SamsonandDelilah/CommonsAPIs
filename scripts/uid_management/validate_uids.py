@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
 """
 Validates UID references across YAML files
-Usage: python validate_uids.py --registry ./data/_meta/uid_registry.yaml --file physics/kinematics/free_fall.yaml
+Usage: python validate_uids.py --registry ./data/meta/version_control/uid_registry.yaml --file physics/mechanics/classical/kinematics/formulas/free_fall.yaml
 """
 
 import yaml
 import sys
+import argparse
 from pathlib import Path
 
 class UIDValidator:
@@ -15,9 +16,9 @@ class UIDValidator:
             
     def validate_file(self, filepath: Path):
         with open(filepath) as f:
-            content = yaml.safe_load(f) or {}
-            
+            content = yaml.safe_load(f) or {}            
         errors = []
+        
         # Check if file has valid UID
         file_uid = self._get_file_uid(filepath)
         if file_uid not in self.registry:
@@ -26,17 +27,33 @@ class UIDValidator:
         # Check all $refs
         for ref in self._find_references(content):
             if ref not in self.registry:
-                errors.append(f"Invalid reference: {ref}")
-                
+                errors.append(f"Invalid reference: {ref}")                
         return errors
     
-    def _get_file_uid(self, filepath: Path) -> str:
-        # Implementation matching init_uid_registry.py
-        pass
+         # --- Add to UIDValidator class ---
+        def _get_file_uid(self, filepath: Path) -> str:
+            """Generate UID matching init_uid_registry.py logic."""
+            domain = filepath.parts[1]  # e.g., "physics"
+            concept = filepath.stem     # filename without extension
+            with open(filepath) as f:
+                content = yaml.safe_load(f) or {}
+            version = content.get('metadata', {}).get('version', '0.0.0')
+            return f"{domain}:{concept}@{version}"
         
-    def _find_references(self, content: dict) -> list:
-        # Recursively find all $ref fields
-        pass
+        def _find_references(self, content: dict) -> list:
+            """Recursively find all $ref fields in nested YAML content."""
+            refs = []
+            def _scan(data):
+                if isinstance(data, dict):
+                    for key, value in data.items():
+                        if key == '$ref':
+                            refs.append(value)
+                        _scan(value)
+                elif isinstance(data, list):
+                    for item in data:
+                        _scan(item)
+            _scan(content)
+            return refs
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()

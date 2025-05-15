@@ -27,13 +27,13 @@ def scan_yaml_files(root_dir: Path) -> dict:
         if 'meta/version_control' in yaml_file.parts:
             continue
             
-        with open(yaml_file) as f:
-            content = yaml.safe_load(f) or {}
+        with open(yaml_file, 'r') as f:
+            raw_content = f.read()  # Read content once
+            content = yaml.safe_load(raw_content) or {}
             uid = generate_uid(yaml_file, content)
-            
             registry[uid] = {
                 'file': str(yaml_file.relative_to(root_dir)),
-                'checksum': file_checksum(f.read()),
+                'checksum': file_checksum(raw_content),  # Use raw_content here
                 'dependencies': find_dependencies(content)
             }
     return registry
@@ -44,9 +44,9 @@ def find_dependencies(content: dict) -> list:
     return []
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser()
-    parser.add_argument('commonsapis', default='./data')
-    parser.add_argument('componsapis', required=True)
+    parser = argparse.ArgumentParser(description="Scan YAML files and generate initial UID registry.")
+    parser.add_argument('--root-dir', default='./data', help='Root directory to scan')
+    parser.add_argument('--output', required=True, help='Output YAML file for UID registry')
     args = parser.parse_args()
     
     registry = scan_yaml_files(Path(args.root_dir))
