@@ -16,7 +16,7 @@ entries:
     dependencies: []
     file: mathematics\dummy.yaml
   meta:uid_registry@0.0.0:
-    checksum: 1234693a8d93dcc727e02e72d2a3ee5d5c4e40a5a379614d73ae6ad0fa3d710e
+    checksum: f988a2d803f6fca68ba5ec09e7c9b9d3906cec06b8e29528232bb74691234da8
     dependencies: []
     file: meta\version_control\uid_registry.yaml
   meta:version_tracker@0.0.0:
@@ -28,6 +28,12 @@ entries:
     dependencies: []
     file: physics\mechanics\classical\kinematics\formulas\dummy.yaml
   physics:free_fall_motion@1.0.0:
-    checksum: 0e3a89d02db9961ac9fcffb36e644885d801975d40cd05b9fad87c7c6f67d45d
-    dependencies: []
+    checksum: 2a4f57e9c806faa1909d88cbc62527b3e1a8f7a97869b213b13122e6eacec636
+    dependencies:
+    - physics:physical_constants_SI@1.0.0#g
+    - physics:physical_constants_SI@1.0.0#g
     file: physics\mechanics\classical\kinematics\formulas\free_fall_motion.yaml
+  physics:physical_constants_SI@1.0.0:
+    checksum: 2c882fbc1b440f0bf1c692b991ceb04aaf98e25eb2e32b0abfdb43dd44d12f32
+    dependencies: []
+    file: physics\units_SI\constants\physical_constants_SI.yaml

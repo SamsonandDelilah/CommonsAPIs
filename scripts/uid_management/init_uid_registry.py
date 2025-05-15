@@ -39,9 +39,19 @@ def scan_yaml_files(root_dir: Path) -> dict:
     return registry
 
 def find_dependencies(content: dict) -> list:
-    """Extract $ref fields from YAML"""
-    # Implementation needed
-    return []
+    """Extract $ref fields from YAML content"""
+    refs = []
+    def _scan(data):
+        if isinstance(data, dict):
+            for k, v in data.items():
+                if k == '$ref':
+                    refs.append(v)
+                _scan(v)
+        elif isinstance(data, list):
+            for item in data:
+                _scan(item)
+    _scan(content)
+    return refs
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="Scan YAML files and generate initial UID registry.")

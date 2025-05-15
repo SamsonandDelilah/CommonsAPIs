@@ -30,30 +30,30 @@ class UIDValidator:
                 errors.append(f"Invalid reference: {ref}")                
         return errors
     
-         # --- Add to UIDValidator class ---
-        def _get_file_uid(self, filepath: Path) -> str:
-            """Generate UID matching init_uid_registry.py logic."""
-            domain = filepath.parts[1]  # e.g., "physics"
-            concept = filepath.stem     # filename without extension
-            with open(filepath) as f:
-                content = yaml.safe_load(f) or {}
-            version = content.get('metadata', {}).get('version', '0.0.0')
-            return f"{domain}:{concept}@{version}"
-        
-        def _find_references(self, content: dict) -> list:
-            """Recursively find all $ref fields in nested YAML content."""
-            refs = []
-            def _scan(data):
-                if isinstance(data, dict):
-                    for key, value in data.items():
-                        if key == '$ref':
-                            refs.append(value)
-                        _scan(value)
-                elif isinstance(data, list):
-                    for item in data:
-                        _scan(item)
-            _scan(content)
-            return refs
+        # --- Add to UIDValidator class ---
+    def _get_file_uid(self, filepath: Path) -> str:
+        """Generate UID matching init_uid_registry.py logic."""
+        domain = filepath.parts[1]  # e.g., "physics"
+        concept = filepath.stem     # filename without extension
+        with open(filepath) as f:
+            content = yaml.safe_load(f) or {}
+        version = content.get('metadata', {}).get('version', '0.0.0')
+        return f"{domain}:{concept}@{version}"
+    
+    def _find_references(self, content: dict) -> list:
+        """Recursively find all $ref fields in nested YAML content."""
+        refs = []
+        def _scan(data):
+            if isinstance(data, dict):
+                for key, value in data.items():
+                    if key == '$ref':
+                        refs.append(value)
+                    _scan(value)
+            elif isinstance(data, list):
+                for item in data:
+                    _scan(item)
+        _scan(content)
+        return refs
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()

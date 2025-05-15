@@ -1,0 +1,10 @@
+metadata:
+  description: "Physical constants in SI units"
+  version: 1.0.0
+
+constants:
+  g:
+    name: gravitational_acceleration
+    value: 9.80665
+    unit: m/s²
+    uncertainty: 0.0
