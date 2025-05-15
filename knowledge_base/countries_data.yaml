@@ -1,0 +1,20 @@
+metadata:
+  filename: countries_data.yaml
+  version: "1.0.0"
+  created_at: "2025-05-08T15:00:00Z"
+  author: "Max Mustermann"
+  source: "https://doi.org/10.xxxx/abc123"
+
+data:
+  - iso2: DE
+    iso3: DEU
+    name_en: Germany
+    region: Europe
+    currency: EUR
+    languages: de
+  - iso2: FR
+    iso3: FRA
+    name_en: France
+    region: Europe
+    currency: EUR
+    languages: fr

@@ -1,0 +1,65 @@
+# all key terms and text values have to be in terminology.yaml, otherwise a warning is given
+# folder structure required see folder_structur.yaml      
+                                                             
+metadata:
+ description: "Describes physical formula 'name', gives equations, "
+ filename: /physics/mechanics/kinematics
+ version: 1.0.0
+ - references: 
+   "[1] Wikipedia, ..."
+   "[2] Textbook...."
+
+data:
+ name: "Free Fall Motion on Earth"
+ - assumptions:
+    - location:
+      galaxy: Milky Way
+      "star system": sun
+      planet: earth
+       model: flat              # default "flat" allowed (flat, spherical, ellipsoid, geoid, Clarke 1866, GRS80, WGS84)
+    - "reference system": "earth ground" # physical reference system
+      "coordinationsystem": 
+      type: cartesian           # default"cartesian" allowed (cartesia, cyndrical, spherical, elliptical, arbitrary) linked to yaml and db(SQLite) files 
+      dimension: 3D             # allowed 1D, 2D, 3D, 4D, nD 
+    - "ambient conditions":
+      media: air                # default "air" model at /materials/gas/
+      temperature: 293.15       # default value in SI units
+      pressure: 104000          # default value in SI units
+  
+ - equations: "Formulas needed for calculations"
+   distance: "s = s_0 + 1/2 * g * t^2"    # python like syntax
+   s:
+    name: distance
+    dimension: L            # "L" linked to yaml and db(SQLite) file at /physics/units            
+   g: physical_constant     # "physical_constant" linked to yaml and db(SQLite) files physical_constants_SI.yaml at /physics/constants
+   t: 
+    name: time
+    dimension: T            # "time" linked to yaml and db(SQLite) file at /physics/units 
+   velocity: "v = v_0 + g*t"
+    v: 
+     name: velocity
+     dimension: L*T^-1      # L / T    
+    g: physical_constant    # "physical_constant" linked to yaml and db(SQLite) files physical_constants_SI.yaml at /physics/constants 
+    t: 
+     name: time
+     dimension: T           # "T" linked to yaml and db(SQLite) file at /physics/units 
+ 
+  "inital conditions": 
+   s_0:
+    name: initial_distance
+    dimension: L 
+   v_0: 
+    name: "initial velcocity"
+    dimension: L*T^-1
+  constraints:
+   c1: "s >= 0.0"           # impact on flat earth 
+   c2: "s_0 >= 0.0"         # minmal s_0 equal to earth ground
+
+
+optional:       
+  solver:
+    method: 
+      default: numeric
+      options: [numeric, symbolic, FEM]   # default numeric, allowed (numeric, algebraic, FEM)
+  precision: float64         # default, allowed (integer, float32, float64, decimal, arbitrary) 
+ 
