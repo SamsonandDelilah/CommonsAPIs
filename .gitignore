@@ -5,7 +5,7 @@ __pycache__/
 
 # Virtuelle Umgebung
 venv/
-*workspace/*
+*workspace/
 
 # SQLite temporäre oder Shell-Dateien
 .exit
