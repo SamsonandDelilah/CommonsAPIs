@@ -1,8 +1,0 @@
-# version_tracker.yaml
-file_history:
-  physics/mechanics/classical/kinematics/formulas/free_fall_motion.yaml:
-    - version: "1.0.0"
-      timestamp: "2025-05-15T14:30:00Z"
-      commit: "a1b2c3d"
-      changes:
-        - "Initial commit"

@@ -1,6 +1,6 @@
 metadata:
   description: "Describes physical formula 'name', gives equations, assumptions"
-  filename: /physics/mechanics/classical/kinematics/formula/free_fall_motion.yaml
+  filename: "/physics/mechanics/classical/kinematics/formula/free_fall_motion.yaml"
   version: 1.0.0
   references:
     - "Wikipedia, ..."

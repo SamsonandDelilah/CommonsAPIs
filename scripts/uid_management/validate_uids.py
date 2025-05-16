@@ -108,6 +108,9 @@ if __name__ == '__main__':
             print("\nValidating all YAML files in /data ...\n")
             all_ok = True
             for yaml_file in Path("data").rglob("*.yaml"):
+                # Skip files in meta/version_control or meta folders
+                if "meta" in yaml_file.parts:
+                    continue
                 errs = validator.validate_file(yaml_file)
                 if errs:
                     print(f"\nErrors in {yaml_file}:")
