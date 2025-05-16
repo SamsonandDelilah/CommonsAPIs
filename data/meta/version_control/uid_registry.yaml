@@ -32,16 +32,16 @@ entries:
     dependencies: []
     file: physics/mechanics/classical/kinematics/formulas/dummy.yaml
   physics:mechanics:classical:kinematics:formulas:free_fall_motion@1.0.0:
-    checksum: 2a4f57e9c806faa1909d88cbc62527b3e1a8f7a97869b213b13122e6eacec636
+    checksum: e45fb065e517d9586bb12ec4bb571d110588368c1bd5e32f4a5db1f010e6daaf
     dependencies:
-    - physics:physical_constants_SI@1.0.0#g
-    - physics:physical_constants_SI@1.0.0#g
+    - physics:units_SI:constants:physical_constants_SI@1.0.0#constants.g
+    - physics:units_SI:constants:physical_constants_SI@1.0.0#constants.g
     file: physics/mechanics/classical/kinematics/formulas/free_fall_motion.yaml
   physics:mechanics:dummy@0.0.0:
     checksum: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
     dependencies: []
     file: physics/mechanics/dummy.yaml
   physics:units_SI:constants:physical_constants_SI@1.0.0:
-    checksum: 7c1bf45c2f85541961327d63e257dfa5c16f132828d3b61f317fdf50535daf66
+    checksum: 87aed2062fedbbb368983d073285a06988472ae548471581921431c5f4cbce88
     dependencies: []
     file: physics/units_SI/constants/physical_constants_SI.yaml

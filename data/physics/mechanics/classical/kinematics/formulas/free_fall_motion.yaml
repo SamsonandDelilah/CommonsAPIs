@@ -1,10 +1,10 @@
 metadata:
   description: "Describes physical formula 'name', gives equations, assumptions"
-  filename: /physics/mechanics/kinematics
+  filename: /physics/mechanics/classical/kinematics/formula/free_fall_motion.yaml
   version: 1.0.0
   references:
-    - "[1] Wikipedia, ..."
-    - "[2] Textbook...."
+    - "Wikipedia, ..."
+    - "Textbook...."
 
 data:
   name: "Free Fall Motion on Earth"
@@ -30,7 +30,7 @@ data:
           name: distance
           dimension: L
         g:
-          $ref: "physics:physical_constants_SI@1.0.0#g"  # Full UID syntax
+          $ref: "physics:units_SI:constants:physical_constants_SI@1.0.0#constants.g"  # Full UID syntax
         t:
           name: time
           dimension: T
@@ -41,7 +41,7 @@ data:
           name: velocity
           dimension: L*T^-1
         g:
-          $ref: "physics:physical_constants_SI@1.0.0#g"  # Full UID syntax
+          $ref: "physics:units_SI:constants:physical_constants_SI@1.0.0#constants.g" # Full UID syntax
         t:
           name: time
           dimension: T

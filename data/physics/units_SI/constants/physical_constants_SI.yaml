@@ -1,5 +1,6 @@
 metadata:
   description: "Physical constants in SI units"
+  filename: /physics/units_SI/constants/physical_constants_SI.yaml
   version: 1.0.0
 
 constants:
