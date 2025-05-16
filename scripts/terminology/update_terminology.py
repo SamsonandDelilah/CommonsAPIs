@@ -1,17 +1,10 @@
 #!/usr/bin/env python3
 
 """
-Automatically adds new terms from YAML files to terminology.yaml
-while preserving existing structure and comments.
-"""
-
-import yaml
-from pathlib import Path
-#!/usr/bin/env python3
-
-"""
-Automatically adds new terms from YAML files to terminology.yaml
-with domains inferred from their file paths.
+Automatically generates/updates terminology.yaml with:
+- Structural keys from all YAML files
+- Values from 'name' fields
+- Semantic versioning
 """
 
 import yaml
@@ -21,128 +14,115 @@ from typing import Dict, List, Set
 import re
 
 # Configuration
-TERM_FIELDS = ['**']  # Scan all fields but filter in extraction logic
-EXCLUDE_DIRS = {'meta'}  # Directories to ignore
+EXCLUDE_DIRS = {'meta'}
+DEFAULT_METADATA = {
+    'version': '1.0.0',
+    'description': 'Centralized terminology for CommonsAPIs'
+}
 
-class TerminologyUpdater:
+class TerminologyManager:
     def __init__(self, terminology_file: Path, root_dir: Path):
         self.terminology_file = terminology_file
         self.root_dir = root_dir
-        self.terms: Dict[str, Dict] = {}  # {term: {'domain': List[str]}}
-        self.domains: Set[str] = set()
+        self.metadata = DEFAULT_METADATA.copy()
+        self.terms: Dict[str, Dict] = {}
+        self.changes_made = False
         
-        # Load existing terminology
-        self._load_terminology()
-        self._find_domains()
+        self._load_existing()
+        self._scan_data_files()
 
-    def _load_terminology(self):
-        """Load existing terminology and normalize all keys."""
+    def _load_existing(self):
+        """Load existing terminology with metadata preservation"""
         if self.terminology_file.exists():
             with open(self.terminology_file) as f:
                 data = yaml.safe_load(f) or {}
+                self.metadata = {**DEFAULT_METADATA, **data.get('metadata', {})}
                 self.terms = data.get('terms', {})
-                # Normalize all keys
-                normalized_terms = {}
-                for term, info in self.terms.items():
-                    normalized = term.strip().lower().replace(' ', '_')
-                    normalized_terms[normalized] = info
-                self.terms = normalized_terms
-
-    def _find_domains(self):
-        """Get valid domains from directory structure"""
-        self.domains = {d.name.lower() for d in self.root_dir.iterdir() 
-                       if d.is_dir() and d.name not in EXCLUDE_DIRS}
 
     def _get_domain(self, filepath: Path) -> str:
-        """Extract domain from file path (data/<domain>/...)"""
+        """Extract domain from file path"""
         try:
-            rel_path = filepath.relative_to(self.root_dir)
-            return rel_path.parts[0].lower()
+            return filepath.relative_to(self.root_dir).parts[0].lower()
         except ValueError:
             return 'general'
 
-    def _extract_terms(self, content: dict) -> Set[str]:
-        """Extract terms and normalize to underscores."""
-        terms = set()
-        
-        def _scan(data, path: str):
-            if isinstance(data, dict):
-                for k, v in data.items():
-                    current_path = f"{path}.{k}" if path else k
-                    if re.search(r'\.name$', current_path):
-                        if isinstance(v, str):
-                            normalized = v.strip().lower().replace(' ', '_')
-                            if '/' not in normalized:
-                                terms.add(normalized)
-                        _scan(v, current_path)
-            elif isinstance(data, list):
-                for item in data:
-                    _scan(item, path)
-        
-        _scan(content, "")
-        return terms
+    def _normalize_term(self, term: str) -> str:
+        """Standardize term formatting"""
+        return term.strip().lower().replace(' ', '_').replace('-', '_')
 
-    def update(self, dry_run: bool = False):
-        """Main update workflow"""
-        new_terms = 0
+    def _process_structure(self, data: dict, domain: str):
+        """Recursively extract keys and name fields from YAML structure"""
+        if isinstance(data, dict):
+            for key, value in data.items():
+                # Add structural keys as terms
+                norm_key = self._normalize_term(key)
+                self._add_term(norm_key, domain)
+                
+                # Process nested structures
+                self._process_structure(value, domain)
+                
+                # Add name field values
+                if key == 'name' and isinstance(value, str):
+                    norm_name = self._normalize_term(value)
+                    self._add_term(norm_name, domain)
+        elif isinstance(data, list):
+            for item in data:
+                self._process_structure(item, domain)
+
+    def _add_term(self, term: str, domain: str):
+        """Add term with domain validation"""
+        if not term or '/' in term:
+            return
         
+        existing = self.terms.get(term, {'domain': []})
+        if domain not in existing['domain']:
+            self.terms[term] = {'domain': sorted(existing['domain'] + [domain])}
+            self.changes_made = True
+
+    def _scan_data_files(self):
+        """Process all YAML files in the data directory"""
         for yaml_file in self.root_dir.rglob('*.yaml'):
-            if EXCLUDE_DIRS & set(yaml_file.parts):
+            if any(part in EXCLUDE_DIRS for part in yaml_file.parts):
                 continue
 
             with open(yaml_file) as f:
                 content = yaml.safe_load(f) or {}
-                
-            domain = self._get_domain(yaml_file)
-            terms = self._extract_terms(content)
-            
-            for term in terms:
-                term = term.strip()
-                if not term:
-                    continue
-                
-                # Initialize new term
-                if term not in self.terms:
-                    self.terms[term] = {'domain': [domain]}
-                    new_terms += 1
-                # Update existing term
-                elif domain not in self.terms[term]['domain']:
-                    self.terms[term]['domain'].append(domain)
-                    new_terms += 1
+                domain = self._get_domain(yaml_file)
+                self._process_structure(content, domain)
 
-        if not dry_run and new_terms > 0:
-            self._save_terminology()
-            
-        return new_terms
+    def _increment_version(self):
+        """Bump patch version number"""
+        try:
+            major, minor, patch = self.metadata['version'].split('.')
+            self.metadata['version'] = f"{major}.{minor}.{int(patch)+1}"
+        except:
+            self.metadata['version'] = '1.0.0'
 
-    def _save_terminology(self):
-        """Save with consistent YAML structure"""
-        formatted = {"terms": {term: info for term, info in sorted(self.terms.items())}}
+    def save(self):
+        """Persist changes to terminology.yaml"""
+        if self.changes_made:
+            self._increment_version()
+            
+        output = {
+            'metadata': self.metadata,
+            'terms': {k: v for k, v in sorted(self.terms.items())}
+        }
         
+        self.terminology_file.parent.mkdir(parents=True, exist_ok=True)
         with open(self.terminology_file, 'w') as f:
-            yaml.dump(formatted, f, sort_keys=False, default_flow_style=False)
+            yaml.dump(output, f, sort_keys=False, default_flow_style=False)
 
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--terminology', required=True, 
                        help="Path to terminology.yaml")
-    parser.add_argument('--root-dir', default='./data', 
+    parser.add_argument('--root-dir', default='data', 
                        help="Root directory to scan")
-    parser.add_argument('--dry-run', action='store_true',
-                       help="Show changes without saving")
     args = parser.parse_args()
 
-    updater = TerminologyUpdater(
-        Path(args.terminology),
-        Path(args.root_dir)
-    )
-    
-    changes = updater.update(dry_run=args.dry_run)
-    
-    if args.dry_run:
-        print(f"Would add/update {changes} terms")
-    else:
-        print(f"Successfully updated {changes} terms")
+    manager = TerminologyManager(Path(args.terminology), Path(args.root_dir))
+    manager.save()
+    print(f"Terminology updated to version {manager.metadata['version']}")
 
 if __name__ == '__main__':
     main()

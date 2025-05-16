@@ -1,0 +1,178 @@
+metadata:
+  version: 1.0.2
+  description: Centralized terminology for CommonsAPIs, ensuring clarity and domain
+    uniqueness.
+terms:
+  $ref:
+    domain:
+    - physics
+  ambient_conditions:
+    domain:
+    - physics
+  assumptions:
+    domain:
+    - physics
+  c1:
+    domain:
+    - physics
+  c2:
+    domain:
+    - physics
+  constants:
+    domain:
+    - physics
+  constraints:
+    domain:
+    - physics
+  coordinate_system:
+    domain:
+    - physics
+  data:
+    domain:
+    - physics
+  default:
+    domain:
+    - physics
+  description:
+    domain:
+    - knowledge_base
+    - physics
+  dimension:
+    domain:
+    - physics
+  distance:
+    domain:
+    - knowledge_base
+    - physics
+  domain:
+    domain:
+    - knowledge_base
+  equations:
+    domain:
+    - physics
+  filename:
+    domain:
+    - physics
+  formula:
+    domain:
+    - physics
+  free_fall_motion_on_earth:
+    domain:
+    - knowledge_base
+    - physics
+  g:
+    domain:
+    - physics
+  gravitational_acceleration:
+    domain:
+    - knowledge_base
+    - physics
+  initial_conditions:
+    domain:
+    - physics
+  initial_distance:
+    domain:
+    - knowledge_base
+    - physics
+  initial_velocity:
+    domain:
+    - knowledge_base
+    - physics
+  location:
+    domain:
+    - physics
+  media:
+    domain:
+    - physics
+  metadata:
+    domain:
+    - knowledge_base
+    - physics
+  method:
+    domain:
+    - physics
+  milky_way:
+    domain:
+    - knowledge_base
+    - physics
+  model:
+    domain:
+    - physics
+  name:
+    domain:
+    - physics
+  optional:
+    domain:
+    - physics
+  options:
+    domain:
+    - physics
+  planet:
+    domain:
+    - physics
+  precision:
+    domain:
+    - physics
+  pressure:
+    domain:
+    - physics
+  reference_system:
+    domain:
+    - physics
+  references:
+    domain:
+    - physics
+  s:
+    domain:
+    - physics
+  s_0:
+    domain:
+    - physics
+  solver:
+    domain:
+    - physics
+  star_system:
+    domain:
+    - physics
+  t:
+    domain:
+    - physics
+  temperature:
+    domain:
+    - physics
+  terms:
+    domain:
+    - knowledge_base
+  time:
+    domain:
+    - knowledge_base
+    - physics
+  type:
+    domain:
+    - physics
+  uncertainty:
+    domain:
+    - physics
+  unit:
+    domain:
+    - physics
+  v:
+    domain:
+    - physics
+  v_0:
+    domain:
+    - physics
+  value:
+    domain:
+    - physics
+  variables:
+    domain:
+    - physics
+  velocity:
+    domain:
+    - knowledge_base
+    - physics
+  version:
+    domain:
+    - knowledge_base
+    - physics
