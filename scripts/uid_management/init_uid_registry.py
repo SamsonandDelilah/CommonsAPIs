@@ -10,12 +10,12 @@ import hashlib
 from pathlib import Path
 import argparse
 
-def generate_uid(filepath: Path, content: dict) -> str:
-    """Generate UID from file metadata"""
-    domain = filepath.parts[1]  # physics/math/etc
+def generate_uid(filepath: Path, content: dict, root_dir: Path) -> str:
+    """Generate UID from nested path and metadata."""
+    nested_path = filepath.relative_to(root_dir).parent.as_posix().replace('/', ':')
     concept = filepath.stem
     version = content.get('metadata', {}).get('version', '0.0.0')
-    return f"{domain}:{concept}@{version}"
+    return f"{nested_path}:{concept}@{version}"
 
 def file_checksum(content: str) -> str:
     """SHA-256 checksum of file content"""
@@ -23,17 +23,17 @@ def file_checksum(content: str) -> str:
 
 def scan_yaml_files(root_dir: Path) -> dict:
     registry = {}
-    for yaml_file in root_dir.glob('**/*.yaml'):
-        if 'meta/version_control' in yaml_file.parts:
+    for yaml_file in root_dir.rglob('*.yaml'):
+        if '.git' in yaml_file.parts or 'meta' in yaml_file.parts:
             continue
-            
-        with open(yaml_file, 'r') as f:
-            raw_content = f.read()  # Read content once
+        with open(yaml_file, 'r', encoding='utf-8') as f:
+            raw_content = f.read()
             content = yaml.safe_load(raw_content) or {}
-            uid = generate_uid(yaml_file, content)
+            # Pass root_dir to generate_uid
+            uid = generate_uid(yaml_file, content, root_dir)
             registry[uid] = {
-                'file': str(yaml_file.relative_to(root_dir)),
-                'checksum': file_checksum(raw_content),  # Use raw_content here
+                'file': yaml_file.relative_to(root_dir).as_posix(),
+                'checksum': file_checksum(raw_content),
                 'dependencies': find_dependencies(content)
             }
     return registry

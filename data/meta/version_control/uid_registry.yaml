@@ -1,39 +1,47 @@
 entries:
-  dummy.yaml:dummy@0.0.0:
+  .:dummy@0.0.0:
     checksum: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
     dependencies: []
     file: dummy.yaml
   knowledge_base:dummy@0.0.0:
     checksum: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
     dependencies: []
-    file: knowledge_base\dummy.yaml
+    file: knowledge_base/dummy.yaml
   materials:dummy@0.0.0:
     checksum: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
     dependencies: []
-    file: materials\dummy.yaml
+    file: materials/dummy.yaml
   mathematics:dummy@0.0.0:
     checksum: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
     dependencies: []
-    file: mathematics\dummy.yaml
-  meta:uid_registry@0.0.0:
-    checksum: f988a2d803f6fca68ba5ec09e7c9b9d3906cec06b8e29528232bb74691234da8
-    dependencies: []
-    file: meta\version_control\uid_registry.yaml
-  meta:version_tracker@0.0.0:
-    checksum: 92e839ad056c9f6e12a4814ae7e1023979247cf7e4902593a6e9cade26ee174b
-    dependencies: []
-    file: meta\version_control\version_tracker.yaml
+    file: mathematics/dummy.yaml
   physics:dummy@0.0.0:
     checksum: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
     dependencies: []
-    file: physics\mechanics\classical\kinematics\formulas\dummy.yaml
-  physics:free_fall_motion@1.0.0:
+    file: physics/dummy.yaml
+  physics:mechanics:classical:dummy@0.0.0:
+    checksum: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    dependencies: []
+    file: physics/mechanics/classical/dummy.yaml
+  physics:mechanics:classical:kinematics:dummy@0.0.0:
+    checksum: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    dependencies: []
+    file: physics/mechanics/classical/kinematics/dummy.yaml
+  physics:mechanics:classical:kinematics:formulas:dummy@0.0.0:
+    checksum: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    dependencies: []
+    file: physics/mechanics/classical/kinematics/formulas/dummy.yaml
+  physics:mechanics:classical:kinematics:formulas:free_fall_motion@1.0.0:
     checksum: 2a4f57e9c806faa1909d88cbc62527b3e1a8f7a97869b213b13122e6eacec636
     dependencies:
     - physics:physical_constants_SI@1.0.0#g
     - physics:physical_constants_SI@1.0.0#g
-    file: physics\mechanics\classical\kinematics\formulas\free_fall_motion.yaml
-  physics:physical_constants_SI@1.0.0:
-    checksum: 2c882fbc1b440f0bf1c692b991ceb04aaf98e25eb2e32b0abfdb43dd44d12f32
+    file: physics/mechanics/classical/kinematics/formulas/free_fall_motion.yaml
+  physics:mechanics:dummy@0.0.0:
+    checksum: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
     dependencies: []
-    file: physics\units_SI\constants\physical_constants_SI.yaml
+    file: physics/mechanics/dummy.yaml
+  physics:units_SI:constants:physical_constants_SI@1.0.0:
+    checksum: 7c1bf45c2f85541961327d63e257dfa5c16f132828d3b61f317fdf50535daf66
+    dependencies: []
+    file: physics/units_SI/constants/physical_constants_SI.yaml
